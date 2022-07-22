@@ -34,6 +34,8 @@
 #define SEAGRASS_FLOAT_ERROR_FLOAT_VALUE_TOO_LARGE              3
 #define SEAGRASS_FLOAT_ERROR_FLOAT_VALUE_IS_NEGATIVE            4
 #define SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT             5
+#define SEAGRASS_FLOAT_ERROR_RESULT_IS_UNCHANGED                6
+#define SEAGRASS_FLOAT_ERROR_DIVIDE_BY_ZERO                     7
 
 /**
  * @brief Comparison function for float*.
@@ -57,22 +59,22 @@ int seagrass_float_ptr_compare(const float* a, const float* b);
 int seagrass_float_compare(float a, float b);
 
 /**
- * @brief Retrieve the smaller float value.
+ * @brief Return the smaller float value.
  * @param [in] a first float.
  * @param [in] b second float.
  * @param [out] out receive the smaller between the first or second values.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
+ * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
  */
 bool seagrass_float_minimum(float a, float b, float *out);
 
 /**
- * @brief Retrieve the larger float value.
+ * @brief Return the larger float value.
  * @param [in] a first float.
  * @param [in] b second float.
  * @param [out] out receive the larger between the first or second values.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
+ * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
  */
 bool seagrass_float_maximum(float a, float b, float *out);
 
@@ -82,11 +84,27 @@ bool seagrass_float_maximum(float a, float b, float *out);
  * @param [in] b second float.
  * @param [out] out receive the result of the two added values.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
+ * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
  * @throws SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT if the added values'
  * result is not consistent.
+ * @throws SEAGRASS_FLOAT_ERROR_RESULT_IS_UNCHANGED if there is expected to be
+ * a change in the result, but there was none.
  */
 bool seagrass_float_add(float a, float b, float *out);
+
+/**
+ * @brief Subtract the second value from the first.
+ * @param [in] a first float.
+ * @param [in] b second float.
+ * @param [out] out receive the result of the two subtracted values.
+ * @return On success true otherwise false if an error occurred.
+ * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
+ * @throws SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT if the subtracted
+ * values' result is not consistent.
+ * @throws SEAGRASS_FLOAT_ERROR_RESULT_IS_UNCHANGED if there is expected to be
+ * a change in the result, but there was none.
+ */
+bool seagrass_float_subtract(float a, float b, float *out);
 
 /**
  * @brief Multiply two float values together.
@@ -94,14 +112,24 @@ bool seagrass_float_add(float a, float b, float *out);
  * @param [in] b second float.
  * @param [out] out receive the result of the two multiplied values.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
+ * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
  * @throws SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT if the multiplied
  * values' result is not consistent.
  */
 bool seagrass_float_multiply(float a, float b, float *out);
 
-// subtract
-// divide
+/**
+ * @brief Divide the first value by the second.
+ * @param [in] a first float.
+ * @param [in] b second float.
+ * @param [out] out receive the result of the division operation.
+ * @return On success true otherwise false if an error occurred.
+ * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
+ * @throws SEAGRASS_FLOAT_ERROR_DIVIDE_BY_ZERO if b is zero.
+ * @throws SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT if the divided value
+ * result is not consistent.
+ */
+bool seagrass_float_divide(float a, float b, float *out);
 
 /**
  * @brief Are the two float values considered equal.
@@ -120,7 +148,7 @@ bool seagrass_float_is_equal(float a, float b, bool *out);
  * @param [out] out true if <b>a</b> is considered greater than <b>b</b>,
  * false otherwise.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
+ * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
  */
 bool seagrass_float_is_greater_than(float a, float b, bool *out);
 
@@ -131,7 +159,7 @@ bool seagrass_float_is_greater_than(float a, float b, bool *out);
  * @param [out] out true if <b>a</b> is considered less than <b>b</b>,
  * false otherwise.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
+ * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
  */
 bool seagrass_float_is_less_than(float a, float b, bool *out);
 
@@ -143,7 +171,7 @@ bool seagrass_float_is_less_than(float a, float b, bool *out);
  * @param [out] out true if <b>a</b> is considered greater than or
  * equal to <b>b</b>, false otherwise.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
+ * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
  */
 bool seagrass_float_is_greater_or_equal(float a, float b, bool *out);
 
@@ -155,7 +183,7 @@ bool seagrass_float_is_greater_or_equal(float a, float b, bool *out);
  * @param [out] out true if <b>a</b> is considered less than or equal to
  * <b>b</b>, false otherwise.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
+ * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
  */
 bool seagrass_float_is_less_or_equal(float a, float b, bool *out);
 

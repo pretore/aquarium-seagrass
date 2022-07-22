@@ -68,18 +68,40 @@ bool seagrass_float_add(const float a, const float b, float *out) {
         seagrass_error = SEAGRASS_FLOAT_ERROR_OUT_IS_NULL;
         return false;
     }
+    const float c = a + b;
+    if ((b && (c == a)) || (a && (c == b))) {
+        seagrass_error = SEAGRASS_FLOAT_ERROR_RESULT_IS_UNCHANGED;
+        return false;
+    }
     bool result;
-    float A, B;
-    seagrass_required_true(seagrass_float_maximum(a, b, &A));
-    seagrass_required_true(seagrass_float_minimum(a, b, &B));
-    const float C = A + B;
     seagrass_required_true(seagrass_float_is_equal(
-            C - A, B, &result));
+            c - a, b, &result));
     if (!result) {
         seagrass_error = SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT;
         return false;
     }
-    *out = C;
+    *out = c;
+    return true;
+}
+
+bool seagrass_float_subtract(const float a, const float b, float *out) {
+    if (!out) {
+        seagrass_error = SEAGRASS_FLOAT_ERROR_OUT_IS_NULL;
+        return false;
+    }
+    const float c = a - b;
+    if ((b && (c == a)) || (a && (c == -b))) {
+        seagrass_error = SEAGRASS_FLOAT_ERROR_RESULT_IS_UNCHANGED;
+        return false;
+    }
+    bool result;
+    seagrass_required_true(seagrass_float_is_equal(
+            c - a, -b, &result));
+    if (!result) {
+        seagrass_error = SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT;
+        return false;
+    }
+    *out = c;
     return true;
 }
 
@@ -106,6 +128,29 @@ bool seagrass_float_multiply(float a, float b, float *out) {
         return false;
     }
     *out = C;
+    return true;
+}
+
+bool seagrass_float_divide(const float a, const float b, float *out) {
+    if (!out) {
+        seagrass_error = SEAGRASS_FLOAT_ERROR_OUT_IS_NULL;
+        return false;
+    }
+    bool result;
+    seagrass_required_true(seagrass_float_is_equal(
+            b, 0, &result));
+    if (result) {
+        seagrass_error = SEAGRASS_FLOAT_ERROR_DIVIDE_BY_ZERO;
+        return false;
+    }
+    const float c = a / b;
+    seagrass_required_true(seagrass_float_is_equal(
+            a, c * b, &result));
+    if (!result) {
+        seagrass_error = SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT;
+        return false;
+    }
+    *out = c;
     return true;
 }
 

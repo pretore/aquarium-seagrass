@@ -104,10 +104,20 @@ static void check_float_add_error_on_out_is_null(void **state) {
 static void check_float_add_error_on_result_is_inconsistent(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
     float result;
+    assert_false(seagrass_float_add( FLT_MAX, FLT_MAX, &result));
+    assert_int_equal(SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT, seagrass_error);
+    assert_false(seagrass_float_add(-FLT_MAX, -FLT_MAX, &result));
+    assert_int_equal(SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT, seagrass_error);
+    seagrass_error = SEAGRASS_ERROR_NONE;
+}
+
+static void check_float_add_error_on_result_is_unchanged(void **state) {
+    seagrass_error = SEAGRASS_ERROR_NONE;
+    float result;
     assert_false(seagrass_float_add( FLT_MAX, 1, &result));
-    assert_int_equal(SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT, seagrass_error);
+    assert_int_equal(SEAGRASS_FLOAT_ERROR_RESULT_IS_UNCHANGED, seagrass_error);
     assert_false(seagrass_float_add(1, FLT_MAX, &result));
-    assert_int_equal(SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT, seagrass_error);
+    assert_int_equal(SEAGRASS_FLOAT_ERROR_RESULT_IS_UNCHANGED, seagrass_error);
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
@@ -119,6 +129,45 @@ static void check_float_add(void **state) {
     assert_true(seagrass_float_add(100000, 100000, &result));
     assert_float_equal(result, 200000, FLT_EPSILON);
     assert_true(seagrass_float_add(1000000000, 1000000000, &result));
+    assert_float_equal(result, 2000000000, FLT_EPSILON);
+    seagrass_error = SEAGRASS_ERROR_NONE;
+}
+
+static void check_float_subtract_error_on_out_is_null(void **state) {
+    seagrass_error = SEAGRASS_ERROR_NONE;
+    assert_false(seagrass_float_subtract(0, 0, NULL));
+    assert_int_equal(SEAGRASS_FLOAT_ERROR_OUT_IS_NULL, seagrass_error);
+    seagrass_error = SEAGRASS_ERROR_NONE;
+}
+
+static void check_float_subtract_error_on_result_is_inconsistent(void **state) {
+    seagrass_error = SEAGRASS_ERROR_NONE;
+    float result;
+    assert_false(seagrass_float_subtract(FLT_MAX, -FLT_MAX, &result));
+    assert_int_equal(SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT, seagrass_error);
+    assert_false(seagrass_float_subtract(-FLT_MAX, FLT_MAX, &result));
+    assert_int_equal(SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT, seagrass_error);
+    seagrass_error = SEAGRASS_ERROR_NONE;
+}
+
+static void check_float_subtract_error_on_result_is_unchanged(void **state) {
+    seagrass_error = SEAGRASS_ERROR_NONE;
+    float result;
+    assert_false(seagrass_float_subtract(-FLT_MAX, 1, &result));
+    assert_int_equal(SEAGRASS_FLOAT_ERROR_RESULT_IS_UNCHANGED, seagrass_error);
+    assert_false(seagrass_float_subtract(-1, FLT_MAX, &result));
+    assert_int_equal(SEAGRASS_FLOAT_ERROR_RESULT_IS_UNCHANGED, seagrass_error);
+    seagrass_error = SEAGRASS_ERROR_NONE;
+}
+
+static void check_float_subtract(void **state) {
+    seagrass_error = SEAGRASS_ERROR_NONE;
+    float result;
+    assert_true(seagrass_float_subtract(1, 1, &result));
+    assert_float_equal(result, 0, FLT_EPSILON);
+    assert_true(seagrass_float_subtract(100000, 1000000, &result));
+    assert_float_equal(result, -900000, FLT_EPSILON);
+    assert_true(seagrass_float_subtract(1000000000, -1000000000, &result));
     assert_float_equal(result, 2000000000, FLT_EPSILON);
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
@@ -161,6 +210,37 @@ static void check_float_multiply(void **state) {
     assert_float_equal(0, result, FLT_EPSILON);
     assert_true(seagrass_float_multiply(0, 400000000, &result));
     assert_float_equal(0, result, FLT_EPSILON);
+    seagrass_error = SEAGRASS_ERROR_NONE;
+}
+
+static void check_float_divide_error_on_out_is_null(void **state) {
+    seagrass_error = SEAGRASS_ERROR_NONE;
+    assert_false(seagrass_float_divide(2, 1, NULL));
+    assert_int_equal(SEAGRASS_FLOAT_ERROR_OUT_IS_NULL, seagrass_error);
+    seagrass_error = SEAGRASS_ERROR_NONE;
+}
+
+static void check_float_divide_error_on_divide_by_zero(void **state) {
+    seagrass_error = SEAGRASS_ERROR_NONE;
+    assert_false(seagrass_float_divide(1, 0, (void *)1));
+    assert_int_equal(SEAGRASS_FLOAT_ERROR_DIVIDE_BY_ZERO, seagrass_error);
+    seagrass_error = SEAGRASS_ERROR_NONE;
+}
+
+static void check_float_divide_error_on_result_is_inconsistent(void **state) {
+    seagrass_error = SEAGRASS_ERROR_NONE;
+    float result;
+    assert_false(seagrass_float_divide(FLT_MAX, 0.00001, &result));
+    assert_int_equal(SEAGRASS_FLOAT_ERROR_RESULT_IS_INCONSISTENT,
+                     seagrass_error);
+    seagrass_error = SEAGRASS_ERROR_NONE;
+}
+
+static void check_float_divide(void **state) {
+    seagrass_error = SEAGRASS_ERROR_NONE;
+    float result;
+    assert_true(seagrass_float_divide(1, -0.1, &result));
+    assert_float_equal(-10, result, FLT_EPSILON);
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
@@ -366,10 +446,19 @@ int main(int argc, char *argv[]) {
             cmocka_unit_test(check_float_maximum),
             cmocka_unit_test(check_float_add_error_on_out_is_null),
             cmocka_unit_test(check_float_add_error_on_result_is_inconsistent),
+            cmocka_unit_test(check_float_add_error_on_result_is_unchanged),
             cmocka_unit_test(check_float_add),
+            cmocka_unit_test(check_float_subtract_error_on_out_is_null),
+            cmocka_unit_test(check_float_subtract_error_on_result_is_inconsistent),
+            cmocka_unit_test(check_float_subtract_error_on_result_is_unchanged),
+            cmocka_unit_test(check_float_subtract),
             cmocka_unit_test(check_float_multiply_error_on_out_is_null),
             cmocka_unit_test(check_float_multiply_error_on_result_is_inconsistent),
             cmocka_unit_test(check_float_multiply),
+            cmocka_unit_test(check_float_divide_error_on_out_is_null),
+            cmocka_unit_test(check_float_divide_error_on_divide_by_zero),
+            cmocka_unit_test(check_float_divide_error_on_result_is_inconsistent),
+            cmocka_unit_test(check_float_divide),
             cmocka_unit_test(check_float_is_equal_error_on_out_is_null),
             cmocka_unit_test(check_float_is_equal),
             cmocka_unit_test(check_float_is_greater_than_error_on_out_is_null),
