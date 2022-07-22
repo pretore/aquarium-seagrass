@@ -17,12 +17,12 @@ int seagrass_size_t_compare(const size_t a, const size_t b) {
 
 bool seagrass_size_t_add(const size_t a, const size_t b, size_t *out) {
     if (!out) {
-        seagrass_error = SEAGRASS_ERROR_OUT_IS_NULL;
+        seagrass_error = SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL;
         return false;
     }
     const size_t result = a + b;
     if (result < a) {
-        seagrass_error = SEAGRASS_ERROR_OVERFLOW_OCCURRED;
+        seagrass_error = SEAGRASS_SIZE_T_ERROR_RESULT_IS_INCONSISTENT;
         return false;
     }
     *out = result;
@@ -31,7 +31,7 @@ bool seagrass_size_t_add(const size_t a, const size_t b, size_t *out) {
 
 bool seagrass_size_t_multiply(const size_t a, const size_t b, size_t *out) {
     if (!out) {
-        seagrass_error = SEAGRASS_ERROR_OUT_IS_NULL;
+        seagrass_error = SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL;
         return false;
     }
     if (!a || !b) {
@@ -40,7 +40,7 @@ bool seagrass_size_t_multiply(const size_t a, const size_t b, size_t *out) {
     }
     const size_t result = a * b;
     if (result / a != b) {
-        seagrass_error = SEAGRASS_ERROR_OVERFLOW_OCCURRED;
+        seagrass_error = SEAGRASS_SIZE_T_ERROR_RESULT_IS_INCONSISTENT;
         return false;
     }
     *out = result;

@@ -5,6 +5,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#define SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL                       1
+#define SEAGRASS_SIZE_T_ERROR_RESULT_IS_INCONSISTENT            2
+
 /**
  * @brief Comparison function for size_t*.
  * @param [in] a first size_t*.
@@ -32,8 +35,9 @@ int seagrass_size_t_compare(size_t a, size_t b);
  * @param [in] b second size_t.
  * @param [out] out where the result is stored if successful.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
- * @throws SEAGRASS_ERROR_OVERFLOW_OCCURRED if an integer overflow has occurred.
+ * @throws SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
+ * @throws SEAGRASS_SIZE_T_ERROR_RESULT_IS_INCONSISTENT if the added values'
+ * result is not consistent.
  */
 bool seagrass_size_t_add(size_t a, size_t b, size_t *out);
 
@@ -43,8 +47,9 @@ bool seagrass_size_t_add(size_t a, size_t b, size_t *out);
  * @param [in] b second size_t.
  * @param [out] out where the result is stored if successful.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
- * @throws SEAGRASS_ERROR_OVERFLOW_OCCURRED if an integer overflow has occurred.
+ * @throws SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
+ * @throws SEAGRASS_SIZE_T_ERROR_RESULT_IS_INCONSISTENT if the multiplied
+ * values' result is not consistent.
  */
 bool seagrass_size_t_multiply(size_t a, size_t b, size_t *out);
 

@@ -46,15 +46,15 @@ static void check_size_t_compare(void **state) {
 static void check_size_t_add_error_on_out_is_null(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
     assert_false(seagrass_size_t_add(0, 1, NULL));
-    assert_int_equal(SEAGRASS_ERROR_OUT_IS_NULL, seagrass_error);
+    assert_int_equal(SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL, seagrass_error);
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
-static void check_size_t_add_error_on_overflow_occurred(void **state) {
+static void check_size_t_add_error_on_result_is_inconsistent(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
     size_t result;
     assert_false(seagrass_size_t_add(SIZE_MAX, 1, &result));
-    assert_int_equal(SEAGRASS_ERROR_OVERFLOW_OCCURRED, seagrass_error);
+    assert_int_equal(SEAGRASS_SIZE_T_ERROR_RESULT_IS_INCONSISTENT, seagrass_error);
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
@@ -69,15 +69,16 @@ static void check_size_t_add(void **state) {
 static void check_size_t_multiply_error_on_out_is_null(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
     assert_false(seagrass_size_t_multiply(1, 3, NULL));
-    assert_int_equal(SEAGRASS_ERROR_OUT_IS_NULL, seagrass_error);
+    assert_int_equal(SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL, seagrass_error);
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
-static void check_size_t_multiply_error_on_overflow_occurred(void **state) {
+static void
+check_size_t_multiply_error_on_result_is_inconsistent(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
     size_t result;
     assert_false(seagrass_size_t_multiply(2, SIZE_MAX, &result));
-    assert_int_equal(SEAGRASS_ERROR_OVERFLOW_OCCURRED, seagrass_error);
+    assert_int_equal(SEAGRASS_SIZE_T_ERROR_RESULT_IS_INCONSISTENT, seagrass_error);
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
@@ -98,10 +99,10 @@ int main(int argc, char *argv[]) {
             cmocka_unit_test(check_size_t_ptr_compare),
             cmocka_unit_test(check_size_t_compare),
             cmocka_unit_test(check_size_t_add_error_on_out_is_null),
-            cmocka_unit_test(check_size_t_add_error_on_overflow_occurred),
+            cmocka_unit_test(check_size_t_add_error_on_result_is_inconsistent),
             cmocka_unit_test(check_size_t_add),
             cmocka_unit_test(check_size_t_multiply_error_on_out_is_null),
-            cmocka_unit_test(check_size_t_multiply_error_on_overflow_occurred),
+            cmocka_unit_test(check_size_t_multiply_error_on_result_is_inconsistent),
             cmocka_unit_test(check_size_t_multiply),
     };
     //cmocka_set_message_output(CM_OUTPUT_XML);
