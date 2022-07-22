@@ -25,7 +25,7 @@ set(SOURCES
 
 if(DOXYGEN_FOUND)
     set(DOXYGEN_EXTRACT_ALL YES)
-    doxygen_add_docs(doc ${EXPORTED_HEADER_FILES})
+    doxygen_add_docs(${PROJECT_NAME}-documentation ${EXPORTED_HEADER_FILES})
 endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -50,42 +50,42 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(LINK_FLAGS "-Wl,--wrap=abort")
     # Unit Tests
     enable_testing()
-    # seagrass-unit-test
-    add_executable(seagrass-unit-test test/test_seagrass.c)
-    target_include_directories(seagrass-unit-test
+    # aquarium-seagrass-unit-test
+    add_executable(${PROJECT_NAME}-unit-test test/test_seagrass.c)
+    target_include_directories(${PROJECT_NAME}-unit-test
             PRIVATE
                 "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>")
-    target_link_libraries(seagrass-unit-test
+    target_link_libraries(${PROJECT_NAME}-unit-test
             PRIVATE
                 ${PROJECT_NAME})
-    set_target_properties(seagrass-unit-test
+    set_target_properties(${PROJECT_NAME}-unit-test
             PROPERTIES
                 LINK_FLAGS ${LINK_FLAGS})
-    add_test(seagrass-unit-test seagrass-unit-test)
-    # float-unit-test
-    add_executable(float-unit-test test/test_float.c)
-    target_include_directories(float-unit-test
+    add_test(${PROJECT_NAME}-unit-test ${PROJECT_NAME}-unit-test)
+    # aquarium-seagrass-float-unit-test
+    add_executable(${PROJECT_NAME}-float-unit-test test/test_float.c)
+    target_include_directories(${PROJECT_NAME}-float-unit-test
             PRIVATE
                 "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>")
-    target_link_libraries(float-unit-test
+    target_link_libraries(${PROJECT_NAME}-float-unit-test
             PRIVATE
                 ${PROJECT_NAME})
-    set_target_properties(float-unit-test
+    set_target_properties(${PROJECT_NAME}-float-unit-test
             PROPERTIES
                 LINK_FLAGS ${LINK_FLAGS})
-    add_test(float-unit-test float-unit-test)
-    # size_t-unit-test
-    add_executable(size_t-unit-test test/test_size_t.c)
-    target_include_directories(size_t-unit-test
+    add_test(${PROJECT_NAME}-float-unit-test ${PROJECT_NAME}-float-unit-test)
+    # aquarium-seagrass-size_t-unit-test
+    add_executable(${PROJECT_NAME}-size_t-unit-test test/test_size_t.c)
+    target_include_directories(${PROJECT_NAME}-size_t-unit-test
             PRIVATE
                 "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>")
-    target_link_libraries(size_t-unit-test
+    target_link_libraries(${PROJECT_NAME}-size_t-unit-test
             PRIVATE
                 ${PROJECT_NAME})
-    set_target_properties(size_t-unit-test
+    set_target_properties(${PROJECT_NAME}-size_t-unit-test
             PROPERTIES
                 LINK_FLAGS ${LINK_FLAGS})
-    add_test(size_t-unit-test size_t-unit-test)
+    add_test(${PROJECT_NAME}-size_t-unit-test ${PROJECT_NAME}-size_t-unit-test)
 else()
     add_library(${PROJECT_NAME} "")
     target_sources(${PROJECT_NAME}
