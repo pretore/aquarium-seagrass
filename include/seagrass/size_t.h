@@ -7,6 +7,8 @@
 
 #define SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL                       1
 #define SEAGRASS_SIZE_T_ERROR_RESULT_IS_INCONSISTENT            2
+#define SEAGRASS_SIZE_T_ERROR_DIVIDE_BY_ZERO                    3
+#define SEAGRASS_SIZE_T_ERROR_QUOTIENT_IS_NULL                  4
 
 /**
  * @brief Comparison function for size_t*.
@@ -30,27 +32,72 @@ int seagrass_size_t_ptr_compare(const size_t *a, const size_t *b);
 int seagrass_size_t_compare(size_t a, size_t b);
 
 /**
- * @brief Add two size_t values together and check for overflow.
+ * @brief Return the smaller size_t value.
  * @param [in] a first size_t.
  * @param [in] b second size_t.
- * @param [out] out where the result is stored if successful.
+ * @param [out] out receive the smaller between the first or second values.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
+ * @throws ROCK_ERROR_OUT_IS_NULL if the out argument is <i>NULL</i>.
+ */
+bool seagrass_size_t_minimum(size_t a, size_t b, size_t *out);
+
+/**
+ * @brief Return the larger size_t value.
+ * @param [in] a first size_t.
+ * @param [in] b second size_t.
+ * @param [out] out receive the larger between the first or second values.
+ * @return On success true otherwise false if an error occurred.
+ * @throws SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
+ */
+bool seagrass_size_t_maximum(size_t a, size_t b, size_t *out);
+
+/**
+ * @brief Add two size_t values together.
+ * @param [in] a first size_t.
+ * @param [in] b second size_t.
+ * @param [out] out receive the result of the two added values.
+ * @return On success true otherwise false if an error occurred.
+ * @throws SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
  * @throws SEAGRASS_SIZE_T_ERROR_RESULT_IS_INCONSISTENT if the added values'
  * result is not consistent.
  */
 bool seagrass_size_t_add(size_t a, size_t b, size_t *out);
 
 /**
- * @brief Multiply two size_t values and check for overflow.
+ * @brief Subtract the second value from the first.
  * @param [in] a first size_t.
  * @param [in] b second size_t.
- * @param [out] out where the result is stored if successful.
+ * @param [out] out receive the result of the two subtracted values.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL if the out is <i>NULL</i>.
+ * @throws SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
+ * @throws SEAGRASS_SIZE_T_ERROR_RESULT_IS_INCONSISTENT if the subtract
+ * values' result is not consistent.
+ */
+bool seagrass_size_t_subtract(size_t a, size_t b, size_t *out);
+
+/**
+ * @brief Multiply two size_t values.
+ * @param [in] a first size_t.
+ * @param [in] b second size_t.
+ * @param [out] out receive the result of the two multiplied values.
+ * @return On success true otherwise false if an error occurred.
+ * @throws SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
  * @throws SEAGRASS_SIZE_T_ERROR_RESULT_IS_INCONSISTENT if the multiplied
  * values' result is not consistent.
  */
 bool seagrass_size_t_multiply(size_t a, size_t b, size_t *out);
+
+/**
+ * @brief Divide the divisor by the dividend.
+ * @param [in] a divisor size_t.
+ * @param [in] b dividend size_t.
+ * @param [out] quotient receive the quotient.
+ * @param [out] remainder optionally receive the remainder.
+ * @return On success true otherwise false if an error occurred.
+ * @throws SEAGRASS_SIZE_T_ERROR_QUOTIENT_IS_NULL if out is <i>NULL</i>.
+ * @throws SEAGRASS_SIZE_T_ERROR_DIVIDE_BY_ZERO if b is zero.
+ */
+bool seagrass_size_t_divide(size_t a, size_t b, size_t *quotient,
+                            size_t *remainder);
 
 #endif /* _SEAGRASS_SIZE_T_H_ */
