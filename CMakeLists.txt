@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(aquarium-seagrass VERSION 1.0.1
+project(aquarium-seagrass VERSION 1.1.0
         LANGUAGES C
         DESCRIPTION "Shared code in aquarium libraries")
 

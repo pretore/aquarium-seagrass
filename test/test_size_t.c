@@ -184,6 +184,49 @@ static void check_size_t_divide(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
+static void
+check_size_t_times_and_a_half_even_error_on_out_is_null(void **state) {
+    seagrass_error = SEAGRASS_ERROR_NONE;
+    assert_false(seagrass_size_t_times_and_a_half_even(0, NULL));
+    assert_int_equal(SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL, seagrass_error);
+    seagrass_error = SEAGRASS_ERROR_NONE;
+}
+
+static void check_size_t_times_and_a_half_even(void **state) {
+    seagrass_error = SEAGRASS_ERROR_NONE;
+    struct pair_t {
+        size_t in;
+        size_t out;
+    };
+    struct pair_t pairs[] = {
+            {0, 2},
+            {2, 4},
+            {4, 6},
+            {6, 10},
+            {10, 16},
+            {16, 24},
+            {24, 36},
+            {36, 54},
+            {54, 82},
+            {82, 124},
+            {124, 186},
+            {186, 280},
+            {280, 420},
+            {420, 630},
+            {630, 946},
+            {946, 1420},
+            {1420, 2130}
+    };
+    const size_t count = sizeof(pairs) / sizeof(struct pair_t);
+    for (size_t i = 0; i < count; i++) {
+        const struct pair_t p = pairs[i];
+        size_t out;
+        assert_true(seagrass_size_t_times_and_a_half_even(p.in, &out));
+        assert_int_equal(p.out, out);
+    }
+    seagrass_error = SEAGRASS_ERROR_NONE;
+}
+
 int main(int argc, char *argv[]) {
     const struct CMUnitTest tests[] = {
             cmocka_unit_test(check_size_t_ptr_compare),
@@ -204,6 +247,8 @@ int main(int argc, char *argv[]) {
             cmocka_unit_test(check_size_t_divide_error_on_quotient_is_null),
             cmocka_unit_test(check_size_t_divide_error_on_divide_by_zero),
             cmocka_unit_test(check_size_t_divide),
+            cmocka_unit_test(check_size_t_times_and_a_half_even_error_on_out_is_null),
+            cmocka_unit_test(check_size_t_times_and_a_half_even),
     };
     //cmocka_set_message_output(CM_OUTPUT_XML);
     return cmocka_run_group_tests(tests, NULL, NULL);

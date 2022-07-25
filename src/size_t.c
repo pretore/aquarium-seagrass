@@ -94,3 +94,26 @@ bool seagrass_size_t_divide(const size_t a, const size_t b, size_t *quotient,
     }
     return true;
 }
+
+bool seagrass_size_t_times_and_a_half_even(const size_t current,
+                                           size_t *out) {
+    if (!out) {
+        seagrass_error = SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL;
+        return false;
+    }
+    /* increase capacity by times and a half and then use the next even
+     * number */
+    size_t i = current >> 1;
+    /* even numbers */
+    if ((current & 1) ^ (i & 1)) {
+        i += 1;
+    }
+    if (!seagrass_size_t_add(current, i, out)) {
+        seagrass_required_true(SEAGRASS_SIZE_T_ERROR_RESULT_IS_INCONSISTENT
+                               == seagrass_error);
+        *out = SIZE_MAX;
+    } else if (!current) {
+        *out = 2;
+    }
+    return true;
+}

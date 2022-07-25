@@ -89,15 +89,24 @@ bool seagrass_size_t_multiply(size_t a, size_t b, size_t *out);
 
 /**
  * @brief Divide the divisor by the dividend.
- * @param [in] a divisor size_t.
- * @param [in] b dividend size_t.
+ * @param [in] divisor size_t divided by dividend.
+ * @param [in] dividend size_t used to divide divisor.
  * @param [out] quotient receive the quotient.
  * @param [out] remainder optionally receive the remainder.
  * @return On success true otherwise false if an error occurred.
- * @throws SEAGRASS_SIZE_T_ERROR_QUOTIENT_IS_NULL if out is <i>NULL</i>.
+ * @throws SEAGRASS_SIZE_T_ERROR_QUOTIENT_IS_NULL if quotient is <i>NULL</i>.
  * @throws SEAGRASS_SIZE_T_ERROR_DIVIDE_BY_ZERO if b is zero.
  */
-bool seagrass_size_t_divide(size_t a, size_t b, size_t *quotient,
+bool seagrass_size_t_divide(size_t divisor, size_t dividend, size_t *quotient,
                             size_t *remainder);
+
+/**
+ * @brief Return the times and a half and then even number.
+ * @param [in] current whose value is used to calculate the next number.
+ * @param [out] out receive the result of times and a half and then even.
+ * @return On success true otherwise false if an error occurred.
+ * @throws SEAGRASS_SIZE_T_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
+ */
+bool seagrass_size_t_times_and_a_half_even(size_t current, size_t *out);
 
 #endif /* _SEAGRASS_SIZE_T_H_ */
