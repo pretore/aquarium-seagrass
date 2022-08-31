@@ -1,6 +1,4 @@
 #include <stdlib.h>
-#include <math.h>
-#include <float.h>
 #include <seagrass.h>
 
 void seagrass_required(const void *object) {

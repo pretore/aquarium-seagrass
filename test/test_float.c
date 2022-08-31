@@ -334,25 +334,25 @@ static void check_float_is_less_than_or_equal(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
-static void check_float_to_size_t_error_on_out_is_null(void **state) {
+static void check_float_to_uintmax_t_error_on_out_is_null(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
-    assert_false(seagrass_float_to_size_t(0, 0, NULL));
+    assert_false(seagrass_float_to_uintmax_t(0, 0, NULL));
     assert_int_equal(SEAGRASS_FLOAT_ERROR_OUT_IS_NULL, seagrass_error);
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
-static void check_float_to_size_t_error_on_mode_is_invalid(void **state) {
+static void check_float_to_uintmax_t_error_on_mode_is_invalid(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
-    assert_false(seagrass_float_to_size_t(0, SIZE_MAX, (void *)1));
+    assert_false(seagrass_float_to_uintmax_t(0, SIZE_MAX, (void *)1));
     assert_int_equal(SEAGRASS_FLOAT_ERROR_MODE_IS_INVALID, seagrass_error);
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
 static void
-check_float_to_size_t_error_on_float_value_is_negative(void **state) {
+check_float_to_uintmax_t_error_on_float_value_is_negative(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
-    size_t result;
-    assert_false(seagrass_float_to_size_t(
+    uintmax_t result;
+    assert_false(seagrass_float_to_uintmax_t(
             -FLT_EPSILON,
             SEAGRASS_FLOAT_ROUNDING_MODE_TOWARDS_ZERO,
             &result));
@@ -361,10 +361,10 @@ check_float_to_size_t_error_on_float_value_is_negative(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
-static void check_float_to_size_t_error_on_float_value_too_large(void **state) {
+static void check_float_to_uintmax_t_error_on_float_value_too_large(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
-    size_t result;
-    assert_false(seagrass_float_to_size_t(
+    uintmax_t result;
+    assert_false(seagrass_float_to_uintmax_t(
             FLT_MAX,
             SEAGRASS_FLOAT_ROUNDING_MODE_NEAREST,
             &result));
@@ -372,15 +372,15 @@ static void check_float_to_size_t_error_on_float_value_too_large(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
-static void check_float_to_size_t_with_round_mode_nearest(void **state) {
+static void check_float_to_uintmax_t_with_round_mode_nearest(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
-    size_t result;
-    assert_true(seagrass_float_to_size_t(
+    uintmax_t result;
+    assert_true(seagrass_float_to_uintmax_t(
             6.2,
             SEAGRASS_FLOAT_ROUNDING_MODE_NEAREST,
             &result));
     assert_int_equal(6, result);
-    assert_true(seagrass_float_to_size_t(
+    assert_true(seagrass_float_to_uintmax_t(
             18.7,
             SEAGRASS_FLOAT_ROUNDING_MODE_NEAREST,
             &result));
@@ -388,15 +388,15 @@ static void check_float_to_size_t_with_round_mode_nearest(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
-static void check_float_to_size_t_with_round_mode_downward(void **state) {
+static void check_float_to_uintmax_t_with_round_mode_downward(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
-    size_t result;
-    assert_true(seagrass_float_to_size_t(
+    uintmax_t result;
+    assert_true(seagrass_float_to_uintmax_t(
             6.2,
             SEAGRASS_FLOAT_ROUNDING_MODE_DOWNWARD,
             &result));
     assert_int_equal(6, result);
-    assert_true(seagrass_float_to_size_t(
+    assert_true(seagrass_float_to_uintmax_t(
             19.7,
             SEAGRASS_FLOAT_ROUNDING_MODE_DOWNWARD,
             &result));
@@ -404,15 +404,15 @@ static void check_float_to_size_t_with_round_mode_downward(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
-static void check_float_to_size_t_with_round_mode_upward(void **state) {
+static void check_float_to_uintmax_t_with_round_mode_upward(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
-    size_t result;
-    assert_true(seagrass_float_to_size_t(
+    uintmax_t result;
+    assert_true(seagrass_float_to_uintmax_t(
             6.2,
             SEAGRASS_FLOAT_ROUNDING_MODE_UPWARD,
             &result));
     assert_int_equal(7, result);
-    assert_true(seagrass_float_to_size_t(
+    assert_true(seagrass_float_to_uintmax_t(
             19.7,
             SEAGRASS_FLOAT_ROUNDING_MODE_UPWARD,
             &result));
@@ -420,15 +420,15 @@ static void check_float_to_size_t_with_round_mode_upward(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
 }
 
-static void check_float_to_size_t_with_round_mode_towards_zero(void **state) {
+static void check_float_to_uintmax_t_with_round_mode_towards_zero(void **state) {
     seagrass_error = SEAGRASS_ERROR_NONE;
-    size_t result;
-    assert_true(seagrass_float_to_size_t(
+    uintmax_t result;
+    assert_true(seagrass_float_to_uintmax_t(
             6.2,
             SEAGRASS_FLOAT_ROUNDING_MODE_TOWARDS_ZERO,
             &result));
     assert_int_equal(6, result);
-    assert_true(seagrass_float_to_size_t(
+    assert_true(seagrass_float_to_uintmax_t(
             19.7,
             SEAGRASS_FLOAT_ROUNDING_MODE_TOWARDS_ZERO,
             &result));
@@ -469,14 +469,14 @@ int main(int argc, char *argv[]) {
             cmocka_unit_test(check_float_is_greater_or_equal),
             cmocka_unit_test(check_float_is_less_than_or_equal_error_on_out_is_null),
             cmocka_unit_test(check_float_is_less_than_or_equal),
-            cmocka_unit_test(check_float_to_size_t_error_on_out_is_null),
-            cmocka_unit_test(check_float_to_size_t_error_on_mode_is_invalid),
-            cmocka_unit_test(check_float_to_size_t_error_on_float_value_is_negative),
-            cmocka_unit_test(check_float_to_size_t_error_on_float_value_too_large),
-            cmocka_unit_test(check_float_to_size_t_with_round_mode_nearest),
-            cmocka_unit_test(check_float_to_size_t_with_round_mode_downward),
-            cmocka_unit_test(check_float_to_size_t_with_round_mode_upward),
-            cmocka_unit_test(check_float_to_size_t_with_round_mode_towards_zero),
+            cmocka_unit_test(check_float_to_uintmax_t_error_on_out_is_null),
+            cmocka_unit_test(check_float_to_uintmax_t_error_on_mode_is_invalid),
+            cmocka_unit_test(check_float_to_uintmax_t_error_on_float_value_is_negative),
+            cmocka_unit_test(check_float_to_uintmax_t_error_on_float_value_too_large),
+            cmocka_unit_test(check_float_to_uintmax_t_with_round_mode_nearest),
+            cmocka_unit_test(check_float_to_uintmax_t_with_round_mode_downward),
+            cmocka_unit_test(check_float_to_uintmax_t_with_round_mode_upward),
+            cmocka_unit_test(check_float_to_uintmax_t_with_round_mode_towards_zero),
     };
     //cmocka_set_message_output(CM_OUTPUT_XML);
     return cmocka_run_group_tests(tests, NULL, NULL);

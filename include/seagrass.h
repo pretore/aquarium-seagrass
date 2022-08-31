@@ -7,7 +7,7 @@
 
 #include <seagrass/error.h>
 #include <seagrass/float.h>
-#include <seagrass/size_t.h>
+#include <seagrass/uintmax_t.h>
 
 /**
  * @brief Require that object be non-<i>NULL</i>.

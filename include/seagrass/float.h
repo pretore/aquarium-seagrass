@@ -188,23 +188,23 @@ bool seagrass_float_is_greater_or_equal(float a, float b, bool *out);
 bool seagrass_float_is_less_or_equal(float a, float b, bool *out);
 
 /**
- * @brief Convert the float value to a size_t value.
+ * @brief Convert the float value to a uintmax_t value.
  * @param [in] a float value.
  * @param [in] mode rounding to apply to float in order to convert it to a
- * size_t.
- * @param [out] out receive the size_t value of the float.
+ * uintmax_t.
+ * @param [out] out receive the uintmax_t value of the float.
  * @return On success true otherwise false if an error occurred.
  * @throws SEAGRASS_FLOAT_ERROR_OUT_IS_NULL if out is <i>NULL</i>.
  * @throws SEAGRASS_FLOAT_ERROR_FLOAT_VALUE_IS_NEGATIVE if a is negative.
  * @throws SEAGRASS_FLOAT_ERROR_MODE_IS_INVALID if mode is not one of
  * rounding modes.
  * @throws SEAGRASS_FLOAT_ERROR_FLOAT_VALUE_TOO_LARGE if a is too large to be
- * stored in a size_t.
+ * stored in a uintmax_t.
  * @see SEAGRASS_FLOAT_ROUNDING_MODE_NEAREST
  * @see SEAGRASS_FLOAT_ROUNDING_MODE_DOWNWARD
  * @see SEAGRASS_FLOAT_ROUNDING_MODE_UPWARD
  * @see SEAGRASS_FLOAT_ROUNDING_MODE_TOWARDS_ZERO
  */
-bool seagrass_float_to_size_t(float a, size_t mode, size_t *out);
+bool seagrass_float_to_uintmax_t(float a, uintmax_t mode, uintmax_t *out);
 
 #endif /* _SEAGRASS_FLOAT_H_ */

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(aquarium-seagrass VERSION 1.1.1
+project(aquarium-seagrass VERSION 2.0.0
         LANGUAGES C
         DESCRIPTION "Shared code in aquarium libraries")
 
@@ -14,14 +14,14 @@ find_package(Doxygen OPTIONAL_COMPONENTS dot mscgen dia)
 set(EXPORTED_HEADER_FILES
         include/seagrass/error.h
         include/seagrass/float.h
-        include/seagrass/size_t.h
+        include/seagrass/uintmax_t.h
         include/seagrass.h)
 set(SOURCES
         ${EXPORTED_HEADER_FILES}
         src/error.c
         src/float.c
         src/seagrass.c
-        src/size_t.c)
+        src/uintmax_t.c)
 
 if(DOXYGEN_FOUND)
     set(DOXYGEN_EXTRACT_ALL YES)
@@ -74,18 +74,19 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
             PROPERTIES
                 LINK_FLAGS ${LINK_FLAGS})
     add_test(${PROJECT_NAME}-float-unit-test ${PROJECT_NAME}-float-unit-test)
-    # aquarium-seagrass-size_t-unit-test
-    add_executable(${PROJECT_NAME}-size_t-unit-test test/test_size_t.c)
-    target_include_directories(${PROJECT_NAME}-size_t-unit-test
+    # aquarium-seagrass-uintmax_t-unit-test
+    add_executable(${PROJECT_NAME}-uintmax_t-unit-test test/test_uintmax_t.c)
+    target_include_directories(${PROJECT_NAME}-uintmax_t-unit-test
             PRIVATE
                 "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>")
-    target_link_libraries(${PROJECT_NAME}-size_t-unit-test
+    target_link_libraries(${PROJECT_NAME}-uintmax_t-unit-test
             PRIVATE
                 ${PROJECT_NAME})
-    set_target_properties(${PROJECT_NAME}-size_t-unit-test
+    set_target_properties(${PROJECT_NAME}-uintmax_t-unit-test
             PROPERTIES
                 LINK_FLAGS ${LINK_FLAGS})
-    add_test(${PROJECT_NAME}-size_t-unit-test ${PROJECT_NAME}-size_t-unit-test)
+    add_test(${PROJECT_NAME}-uintmax_t-unit-test
+            ${PROJECT_NAME}-uintmax_t-unit-test)
 else()
     add_library(${PROJECT_NAME} "")
     target_sources(${PROJECT_NAME}

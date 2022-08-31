@@ -210,7 +210,8 @@ bool seagrass_float_is_less_or_equal(const float a, const float b, bool *out) {
     return true;
 }
 
-bool seagrass_float_to_size_t(const float a, const size_t mode, size_t *out) {
+bool seagrass_float_to_uintmax_t(const float a, const uintmax_t mode,
+                                 uintmax_t *out) {
     if (!out) {
         seagrass_error = SEAGRASS_FLOAT_ERROR_OUT_IS_NULL;
         return false;
