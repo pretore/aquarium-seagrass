@@ -6,12 +6,11 @@
 #include <seagrass.h>
 
 #include "test/cmocka.h"
-#include "test/wrap.h"
 
 static void check_required(void **state) {
     abort_is_overridden = true;
     seagrass_required((void *)1);
-    expect_function_call(__wrap_abort);
+    expect_function_call(cmocka_test_abort);
     seagrass_required(NULL);
     abort_is_overridden = false;
 }
@@ -19,7 +18,7 @@ static void check_required(void **state) {
 static void check_required_true(void **state) {
     abort_is_overridden = true;
     seagrass_required_true(true);
-    expect_function_call(__wrap_abort);
+    expect_function_call(cmocka_test_abort);
     seagrass_required_true(false);
     abort_is_overridden = false;
 }

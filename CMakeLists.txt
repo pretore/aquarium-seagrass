@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(aquarium-seagrass VERSION 2.0.0
+project(aquarium-seagrass VERSION 2.0.1
         LANGUAGES C
         DESCRIPTION "Shared code in aquarium libraries")
 
@@ -35,9 +35,8 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_sources(${PROJECT_NAME}
             PRIVATE
                 ${SOURCES}
-                src/test/cmocka.h
-                src/test/wrap.c
-                src/test/wrap.h)
+                src/test/cmocka.c
+                src/test/cmocka.h)
     target_link_libraries(${PROJECT_NAME}
             PUBLIC
                 m
@@ -47,7 +46,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
             PUBLIC
                 "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
                 "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>")
-    set(LINK_FLAGS "-Wl,--wrap=abort")
     # Unit Tests
     enable_testing()
     # aquarium-seagrass-unit-test
@@ -58,9 +56,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_link_libraries(${PROJECT_NAME}-unit-test
             PRIVATE
                 ${PROJECT_NAME})
-    set_target_properties(${PROJECT_NAME}-unit-test
-            PROPERTIES
-                LINK_FLAGS ${LINK_FLAGS})
     add_test(${PROJECT_NAME}-unit-test ${PROJECT_NAME}-unit-test)
     # aquarium-seagrass-float-unit-test
     add_executable(${PROJECT_NAME}-float-unit-test test/test_float.c)
@@ -70,9 +65,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_link_libraries(${PROJECT_NAME}-float-unit-test
             PRIVATE
                 ${PROJECT_NAME})
-    set_target_properties(${PROJECT_NAME}-float-unit-test
-            PROPERTIES
-                LINK_FLAGS ${LINK_FLAGS})
     add_test(${PROJECT_NAME}-float-unit-test ${PROJECT_NAME}-float-unit-test)
     # aquarium-seagrass-uintmax_t-unit-test
     add_executable(${PROJECT_NAME}-uintmax_t-unit-test test/test_uintmax_t.c)
@@ -82,9 +74,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_link_libraries(${PROJECT_NAME}-uintmax_t-unit-test
             PRIVATE
                 ${PROJECT_NAME})
-    set_target_properties(${PROJECT_NAME}-uintmax_t-unit-test
-            PROPERTIES
-                LINK_FLAGS ${LINK_FLAGS})
     add_test(${PROJECT_NAME}-uintmax_t-unit-test
             ${PROJECT_NAME}-uintmax_t-unit-test)
 else()

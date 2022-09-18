@@ -7,7 +7,6 @@
 #include <float.h>
 
 #include "test/cmocka.h"
-#include "test/wrap.h"
 
 static void check_float_ptr_compare(void **state) {
     const float q[] = {
@@ -28,7 +27,7 @@ static void check_float_ptr_compare(void **state) {
     assert_int_equal(1, seagrass_float_ptr_compare(NULL, i[1]));
 
     abort_is_overridden = true;
-    expect_function_call(__wrap_abort);
+    expect_function_call(cmocka_test_abort);
     seagrass_float_ptr_compare(NULL, NULL);
     abort_is_overridden = false;
 }
