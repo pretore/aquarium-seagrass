@@ -4,6 +4,8 @@ project(aquarium-seagrass VERSION 2.0.1
         DESCRIPTION "Shared code in aquarium libraries")
 
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED True)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 # Dependencies
 set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
