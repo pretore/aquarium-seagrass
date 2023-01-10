@@ -95,7 +95,7 @@ bool seagrass_uintmax_t_multiply(uintmax_t a, uintmax_t b, uintmax_t *out);
  * @param [out] remainder optionally receive the remainder.
  * @return On success true otherwise false if an error occurred.
  * @throws SEAGRASS_UINTMAX_T_ERROR_QUOTIENT_IS_NULL if quotient is <i>NULL</i>.
- * @throws SEAGRASS_UINTMAX_T_ERROR_DIVIDE_BY_ZERO if b is zero.
+ * @throws SEAGRASS_UINTMAX_T_ERROR_DIVIDE_BY_ZERO if dividend is zero.
  */
 bool seagrass_uintmax_t_divide(uintmax_t divisor, uintmax_t dividend,
                                uintmax_t *quotient, uintmax_t *remainder);

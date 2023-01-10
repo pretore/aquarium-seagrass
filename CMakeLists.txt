@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
-project(aquarium-seagrass VERSION 2.0.1
+project(aquarium-seagrass VERSION 2.0.2
         LANGUAGES C
-        DESCRIPTION "Shared code in aquarium libraries")
+        DESCRIPTION "C data types")
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED True)
@@ -31,19 +31,17 @@ if(DOXYGEN_FOUND)
 endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    include(cmake/FetchCMocka.cmake)
+    include(cmake/FetchAquariumCmocka.cmake)
     add_library(${PROJECT_NAME} STATIC "")
     add_compile_definitions(TEST)
     target_sources(${PROJECT_NAME}
             PRIVATE
-                ${SOURCES}
-                src/test/cmocka.c
-                src/test/cmocka.h)
+                ${SOURCES})
     target_link_libraries(${PROJECT_NAME}
             PUBLIC
                 m
                 ${CMAKE_THREAD_LIBS_INIT}
-                ${CMOCKA_SHARED_LIBRARY})
+                aquarium-cmocka)
     target_include_directories(${PROJECT_NAME}
             PUBLIC
                 "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"

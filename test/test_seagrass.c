@@ -5,7 +5,7 @@
 #include <string.h>
 #include <seagrass.h>
 
-#include "test/cmocka.h"
+#include <test/cmocka.h>
 
 static void check_required(void **state) {
     abort_is_overridden = true;

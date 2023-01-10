@@ -5,7 +5,7 @@
 #include <string.h>
 #include <seagrass.h>
 
-#include "test/cmocka.h"
+#include <test/cmocka.h>
 
 static void check_uintmax_t_ptr_compare(void **state) {
     const uintmax_t q[] = {

@@ -6,7 +6,7 @@
 #include <seagrass.h>
 #include <float.h>
 
-#include "test/cmocka.h"
+#include <test/cmocka.h>
 
 static void check_float_ptr_compare(void **state) {
     const float q[] = {
