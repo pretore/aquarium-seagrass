@@ -31,7 +31,7 @@ if(DOXYGEN_FOUND)
 endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    include(cmake/FetchAquariumCmocka.cmake)
+    include(cmake/FetchAquariumCMocka.cmake)
     add_library(${PROJECT_NAME} STATIC "")
     add_compile_definitions(TEST)
     target_sources(${PROJECT_NAME}
