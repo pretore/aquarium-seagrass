@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 project(aquarium-seagrass VERSION 2.0.2
         LANGUAGES C
-        DESCRIPTION "C data types")
+        DESCRIPTION "Safe C")
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED True)
