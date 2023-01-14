@@ -1,6 +1,10 @@
 #include <stdlib.h>
 #include <seagrass.h>
 
+#ifdef TEST
+#include <test/cmocka.h>
+#endif
+
 int seagrass_uintmax_t_ptr_compare(const uintmax_t *a, const uintmax_t *b) {
     seagrass_required_true(a || b);
     if (!b) {

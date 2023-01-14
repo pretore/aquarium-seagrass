@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include <seagrass.h>
 
-#include "test/cmocka.h"
+#ifdef TEST
+#include <test/cmocka.h>
+#endif
 
 void seagrass_required(const void *object) {
     seagrass_required_true(NULL != object);

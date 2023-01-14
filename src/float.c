@@ -6,6 +6,10 @@
 
 #pragma STDC FENV_ACCESS ON
 
+#ifdef TEST
+#include <test/cmocka.h>
+#endif
+
 int seagrass_float_ptr_compare(const float* a, const float* b) {
     seagrass_required_true(a || b);
     if (!b) {
