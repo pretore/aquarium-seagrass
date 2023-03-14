@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(aquarium-seagrass VERSION 2.0.5
+project(aquarium-seagrass VERSION 3.0.0
         LANGUAGES C
         DESCRIPTION "Safe C")
 
@@ -11,16 +11,18 @@ set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED)
 find_package(Doxygen OPTIONAL_COMPONENTS dot mscgen dia)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    include(cmake/FetchAquariumCMocka.cmake)
+endif()
+include(cmake/FetchAquariumSeaUrchin.cmake)
 
 # Sources
 set(EXPORTED_HEADER_FILES
-        include/seagrass/error.h
         include/seagrass/float.h
         include/seagrass/uintmax_t.h
         include/seagrass.h)
 set(SOURCES
         ${EXPORTED_HEADER_FILES}
-        src/error.c
         src/float.c
         src/seagrass.c
         src/uintmax_t.c)
@@ -31,7 +33,6 @@ if(DOXYGEN_FOUND)
 endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    include(cmake/FetchAquariumCMocka.cmake)
     add_library(${PROJECT_NAME} STATIC "")
     add_compile_definitions(TEST)
     target_sources(${PROJECT_NAME}
@@ -41,7 +42,8 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
             PUBLIC
                 m
                 ${CMAKE_THREAD_LIBS_INIT}
-                aquarium-cmocka)
+                aquarium-cmocka
+                aquarium-sea-urchin)
     target_include_directories(${PROJECT_NAME}
             PUBLIC
                 "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
@@ -88,7 +90,8 @@ else()
     target_link_libraries(${PROJECT_NAME}
             PUBLIC
                 m
-                ${CMAKE_THREAD_LIBS_INIT})
+                ${CMAKE_THREAD_LIBS_INIT}
+                aquarium-sea-urchin)
     set_target_properties(${PROJECT_NAME}
             PROPERTIES
                 VERSION ${PROJECT_VERSION}

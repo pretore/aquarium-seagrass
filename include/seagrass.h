@@ -5,21 +5,20 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include <seagrass/error.h>
 #include <seagrass/float.h>
 #include <seagrass/uintmax_t.h>
 
 /**
  * @brief Require that object be non-<i>NULL</i>.
  * @param [in] object to check if it is non-<i>NULL</i>.
- * @note Will call abort(3) if object is <i>NULL</i>.
+ * @note abort(3) if object is <i>NULL</i>.
  */
 void seagrass_required(const void *object);
 
 /**
  * @brief Require true evaluation.
  * @param [in] check to see if it is true.
- * @note Will call abort(3) if check is false.
+ * @note abort(3) if check is false.
  */
 void seagrass_required_true(int check);
 

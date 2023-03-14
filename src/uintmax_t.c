@@ -24,107 +24,98 @@ int seagrass_uintmax_t_compare(const uintmax_t a, const uintmax_t b) {
     return (-1);
 }
 
-bool seagrass_uintmax_t_minimum(const uintmax_t a, const uintmax_t b,
-                                uintmax_t *out) {
+int seagrass_uintmax_t_minimum(const uintmax_t a, const uintmax_t b,
+                               uintmax_t *const out) {
     if (!out) {
-        seagrass_error = SEAGRASS_UINTMAX_T_ERROR_OUT_IS_NULL;
-        return false;
+        return SEAGRASS_UINTMAX_T_ERROR_OUT_IS_NULL;
     }
     *out = a < b ? a : b;
-    return true;
+    return 0;
 }
 
-bool seagrass_uintmax_t_maximum(const uintmax_t a, const uintmax_t b,
-                                uintmax_t *out) {
+int seagrass_uintmax_t_maximum(const uintmax_t a, const uintmax_t b,
+                               uintmax_t *const out) {
     if (!out) {
-        seagrass_error = SEAGRASS_UINTMAX_T_ERROR_OUT_IS_NULL;
-        return false;
+        return SEAGRASS_UINTMAX_T_ERROR_OUT_IS_NULL;
     }
     *out = a > b ? a : b;
-    return true;
+    return 0;
 }
 
-bool seagrass_uintmax_t_add(const uintmax_t a, const uintmax_t b,
-                            uintmax_t *out) {
+int seagrass_uintmax_t_add(const uintmax_t a, const uintmax_t b,
+                           uintmax_t *const out) {
     if (!out) {
-        seagrass_error = SEAGRASS_UINTMAX_T_ERROR_OUT_IS_NULL;
-        return false;
+        return SEAGRASS_UINTMAX_T_ERROR_OUT_IS_NULL;
     }
     const uintmax_t c = a + b;
     if (c < a) {
-        seagrass_error = SEAGRASS_UINTMAX_T_ERROR_RESULT_IS_INCONSISTENT;
-        return false;
+        return SEAGRASS_UINTMAX_T_ERROR_RESULT_IS_INCONSISTENT;
     }
     *out = c;
-    return true;
+    return 0;
 }
 
-bool seagrass_uintmax_t_subtract(const uintmax_t a, const uintmax_t b,
-                                 uintmax_t *out) {
+int seagrass_uintmax_t_subtract(const uintmax_t a, const uintmax_t b,
+                                uintmax_t *const out) {
     if (!out) {
-        seagrass_error = SEAGRASS_UINTMAX_T_ERROR_OUT_IS_NULL;
-        return false;
+        return SEAGRASS_UINTMAX_T_ERROR_OUT_IS_NULL;
     }
     if (a < b) {
-        seagrass_error = SEAGRASS_UINTMAX_T_ERROR_RESULT_IS_INCONSISTENT;
-        return false;
+        return SEAGRASS_UINTMAX_T_ERROR_RESULT_IS_INCONSISTENT;
     }
     *out = a - b;
-    return true;
+    return 0;
 }
 
-bool seagrass_uintmax_t_multiply(const uintmax_t a, const uintmax_t b,
-                                 uintmax_t *out) {
+int seagrass_uintmax_t_multiply(const uintmax_t a, const uintmax_t b,
+                                uintmax_t *const out) {
     if (!out) {
-        seagrass_error = SEAGRASS_UINTMAX_T_ERROR_OUT_IS_NULL;
-        return false;
+        return SEAGRASS_UINTMAX_T_ERROR_OUT_IS_NULL;
     }
     if (!a || !b) {
         *out = 0;
-        return true;
+        return 0;
     }
     const uintmax_t c = a * b;
     if (c / a != b) {
-        seagrass_error = SEAGRASS_UINTMAX_T_ERROR_RESULT_IS_INCONSISTENT;
-        return false;
+        return SEAGRASS_UINTMAX_T_ERROR_RESULT_IS_INCONSISTENT;
     }
     *out = c;
-    return true;
+    return 0;
 }
 
-bool seagrass_uintmax_t_divide(const uintmax_t a, const uintmax_t b,
-                               uintmax_t *quotient, uintmax_t *remainder) {
+int seagrass_uintmax_t_divide(const uintmax_t a, const uintmax_t b,
+                              uintmax_t *const quotient,
+                              uintmax_t *const remainder) {
     if (!quotient) {
-        seagrass_error = SEAGRASS_UINTMAX_T_ERROR_QUOTIENT_IS_NULL;
-        return false;
+        return SEAGRASS_UINTMAX_T_ERROR_QUOTIENT_IS_NULL;
     }
     if (!b) {
-        seagrass_error = SEAGRASS_UINTMAX_T_ERROR_DIVIDE_BY_ZERO;
-        return false;
+        return SEAGRASS_UINTMAX_T_ERROR_DIVIDE_BY_ZERO;
     }
     *quotient = a / b;
     if (remainder) {
         *remainder = a % b;
     }
-    return true;
+    return 0;
 }
 
-bool seagrass_uintmax_t_times_and_a_half_even(const uintmax_t current,
-                                              uintmax_t *out) {
+int seagrass_uintmax_t_times_and_a_half_even(const uintmax_t current,
+                                             uintmax_t *const out) {
     if (!out) {
-        seagrass_error = SEAGRASS_UINTMAX_T_ERROR_OUT_IS_NULL;
-        return false;
+        return SEAGRASS_UINTMAX_T_ERROR_OUT_IS_NULL;
     }
     /* increase capacity by times and a half and then use the next even
      * number */
-    size_t i = current >> 1;
+    uintmax_t i = current >> 1;
     /* even numbers */
     if ((current & 1) ^ (i & 1)) {
         i += 1;
     }
-    if (!seagrass_uintmax_t_add(current, i, out)) {
+    int error;
+    if ((error = seagrass_uintmax_t_add(current, i, out))) {
         seagrass_required_true(SEAGRASS_UINTMAX_T_ERROR_RESULT_IS_INCONSISTENT
-                               == seagrass_error);
+                               == error);
         *out = UINTMAX_MAX;
     } else if (!current) {
         *out = 2;
