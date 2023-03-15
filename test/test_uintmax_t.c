@@ -208,7 +208,8 @@ static void check_uintmax_t_times_and_a_half_even(void **state) {
     for (uintmax_t i = 0; i < count; i++) {
         const struct pair p = pairs[i];
         uintmax_t out;
-        assert_true(seagrass_uintmax_t_times_and_a_half_even(p.in, &out));
+        assert_int_equal(
+                seagrass_uintmax_t_times_and_a_half_even(p.in, &out), 0);
         assert_int_equal(p.out, out);
     }
 }

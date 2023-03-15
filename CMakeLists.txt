@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(aquarium-seagrass VERSION 3.0.0
+project(aquarium-seagrass VERSION 3.0.1
         LANGUAGES C
         DESCRIPTION "Safe C")
 

@@ -120,5 +120,5 @@ int seagrass_uintmax_t_times_and_a_half_even(const uintmax_t current,
     } else if (!current) {
         *out = 2;
     }
-    return true;
+    return 0;
 }
